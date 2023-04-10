@@ -1,6 +1,6 @@
 # Report management
 
-## This project is built with Laravel, Inertiajs, ReactJs, TypeScript and TailwindCss
+### This project is built with Laravel, Inertiajs, ReactJs, TypeScript and TailwindCss
 
 ---
 
