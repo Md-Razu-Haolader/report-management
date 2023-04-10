@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Services\DataProviderService;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class DataProviderServiceTest extends TestCase
@@ -18,8 +18,8 @@ class DataProviderServiceTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         static::mockConfig();
-        static::$companyInfo = json_decode(file_get_contents(__DIR__ . '/../../tests/fixtures/company-info.json'), true);
-        static::$historicalData = json_decode(file_get_contents(__DIR__ . '/../../tests/fixtures/historical-data.json'), true);
+        static::$companyInfo = json_decode(file_get_contents(__DIR__.'/../../tests/fixtures/company-info.json'), true);
+        static::$historicalData = json_decode(file_get_contents(__DIR__.'/../../tests/fixtures/historical-data.json'), true);
         static::$dataProviderService = new DataProviderService();
     }
 
@@ -41,7 +41,7 @@ class DataProviderServiceTest extends TestCase
 
     public function testShouldReturnValidCompanyInfo(): void
     {
-        $mockedResponse = \Mockery::mock('overload:' . Http::class);
+        $mockedResponse = \Mockery::mock('overload:'.Http::class);
         $mockedResponse->shouldReceive('get->ok')->once()->andReturn(true);
         $mockedResponse->shouldReceive('get->ok->json')->once()->andReturn(static::$companyInfo);
 
@@ -54,7 +54,7 @@ class DataProviderServiceTest extends TestCase
 
     public function testCompanyInfoShouldReturnArray(): void
     {
-        $mockedResponse = \Mockery::mock('overload:' . Http::class);
+        $mockedResponse = \Mockery::mock('overload:'.Http::class);
         $mockedResponse->shouldReceive('get->ok')->once()->andReturn(true);
         $mockedResponse->shouldReceive('get->ok->json')->once()->andReturn(static::$companyInfo);
 
@@ -66,14 +66,14 @@ class DataProviderServiceTest extends TestCase
     public function testWhenCompanyInfoNotFoundItShouldThrowException(): void
     {
         $this->expectException(\Exception::class);
-        $mockedResponse = \Mockery::mock('overload:' . Http::class);
+        $mockedResponse = \Mockery::mock('overload:'.Http::class);
         $mockedResponse->shouldReceive('get->ok')->once()->andReturn(false);
         static::$dataProviderService->getCompanyInfo();
     }
 
     public function testShouldReturnHistoricalData(): void
     {
-        $mockedResponse = \Mockery::mock('overload:' . Http::class);
+        $mockedResponse = \Mockery::mock('overload:'.Http::class);
         $mockedResponse->shouldReceive('withHeaders->get->ok')->once()->andReturn(true);
         $mockedResponse->shouldReceive('withHeaders->get->ok->json')->once()->andReturn(static::$historicalData);
 
@@ -90,7 +90,7 @@ class DataProviderServiceTest extends TestCase
     public function testWhenHistoricalDataNotFoundItShouldThrowException(): void
     {
         $this->expectException(\Exception::class);
-        $mockedResponse = \Mockery::mock('overload:' . Http::class);
+        $mockedResponse = \Mockery::mock('overload:'.Http::class);
         $mockedResponse->shouldReceive('withHeaders->get->ok')->once()->andReturn(false);
 
         static::$dataProviderService->getHistoricalData('AAIT', '2023-03-07', '2023-04-09');

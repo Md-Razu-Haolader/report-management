@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Services\Interfaces\DataProviderServiceInterface;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 
 class DataProviderService implements DataProviderServiceInterface
 {
@@ -37,14 +37,14 @@ class DataProviderService implements DataProviderServiceInterface
         $response = Http::withHeaders([
             'X-RapidAPI-Key' => $this->apiKey,
             'X-RapidAPI-Host' => $this->apiHost,
-        ])->get(self::HISTORICAL_DATA_ENDPOINT . '?symbol=' . $symbol);
+        ])->get(self::HISTORICAL_DATA_ENDPOINT.'?symbol='.$symbol);
 
         if ($response->ok()) {
             $prices = $response->json()['prices'] ?? [];
 
             return collect($prices)->whereBetween('date', [
                 strtotime($startDate),
-                strtotime($endData . ' 23:59:59'),
+                strtotime($endData.' 23:59:59'),
             ])->values()->all();
         } else {
             throw new \Exception('Historical data not found');
